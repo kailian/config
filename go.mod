@@ -1,4 +1,4 @@
-module git.mingchao.com/linkailian/config
+module github.com/kailian/config
 
 go 1.14
 
