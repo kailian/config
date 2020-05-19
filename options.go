@@ -5,11 +5,10 @@ type Options struct {
 	FileName string
 }
 
-func (opt *Options) init() {
-	if opt.FilePath == "" {
-		opt.FilePath = "."
+func NewOptions() *Options {
+	opt := &Options{
+		".",
+		"config",
 	}
-	if opt.FileName == "" {
-		opt.FileName = "config"
-	}
+	return opt
 }

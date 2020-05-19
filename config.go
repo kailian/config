@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 
+	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
 
@@ -11,7 +12,9 @@ type Config struct {
 }
 
 func New(opt *Options) *Config {
-	opt.init()
+	if opt == nil {
+		opt = NewOptions()
+	}
 	NewConfig := viper.New()
 	NewConfig.SetConfigName(opt.FileName)
 	NewConfig.AddConfigPath(opt.FilePath)
@@ -37,4 +40,7 @@ func (c *Config) GetConfig() *viper.Viper {
 // 监控配置变化
 func (c *Config) WatchConfig() {
 	c.vconfig.WatchConfig()
+	c.vconfig.OnConfigChange(func(e fsnotify.Event) {
+		fmt.Println("Config file changed:", e.Name)
+	})
 }
